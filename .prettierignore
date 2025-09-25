@@ -1,0 +1,14 @@
+node_modules
+.next
+.vercel
+out
+build
+next-env.d.ts
+.claude
+.specify
+specs
+PRODUCT_SPEC.md
+REQUIREMENTS.md
+*.config.js
+*.config.ts
+package-lock.json
