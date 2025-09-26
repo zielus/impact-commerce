@@ -17,7 +17,7 @@ export function AppProviders({ children }: AppProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <GlobalStyles theme={theme} />
+        <GlobalStyles />
         {children}
       </ThemeProvider>
     </QueryClientProvider>

@@ -1,7 +1,7 @@
+import { theme } from "@/styles/theme";
 import { render, screen } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
 import { describe, expect, it } from "vitest";
-import { theme } from "@/styles/theme";
 import { Button } from "./Button";
 
 const renderWithTheme = (ui: React.ReactElement) => {
@@ -11,7 +11,9 @@ const renderWithTheme = (ui: React.ReactElement) => {
 describe("Button", () => {
   it("renders children correctly", () => {
     renderWithTheme(<Button>Click me</Button>);
-    expect(screen.getByRole("button", { name: /click me/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /click me/i })
+    ).toBeInTheDocument();
   });
 
   it("applies variant correctly", () => {
