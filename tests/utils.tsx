@@ -24,7 +24,7 @@ const AllTheProviders: React.FC<AllTheProvidersProps> = ({ children }) => {
 };
 
 const ThemeOnlyProvider: React.FC<AllTheProvidersProps> = ({ children }) => (
-  <></>
+  <>{children}</>
 );
 
 const customRender = (

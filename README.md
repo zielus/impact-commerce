@@ -14,11 +14,11 @@ A modern e-commerce web application built with Next.js 15, React 19, and TypeScr
 ## 🛠 Tech Stack
 
 - **Framework**: Next.js 15 with App Router
-- **Frontend**: React 19, TypeScript, styled-components
+- **Frontend**: React 19, TypeScript, vanilla-extract
 - **State Management**: TanStack Query + Zustand
 - **Icons**: Lucide React
 - **Testing**: Vitest, React Testing Library
-- **Development**: pnpm, ESLint, Prettier, Turbopack
+- **Development**: pnpm, ESLint, Prettier
 
 ## 📦 Getting Started
 
@@ -47,7 +47,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ```bash
 # Development
-pnpm dev              # Start development server with Turbopack
+pnpm dev              # Start development server
 pnpm build            # Build for production
 pnpm start            # Start production server
 
@@ -103,4 +103,4 @@ The project uses a comprehensive testing strategy:
 1. **Testing**: Write tests alongside implementation
 2. **Type Safety**: Leverage TypeScript strict mode
 3. **Code Quality**: Automated linting and formatting
-4. **Performance**: Turbopack for fast builds and HMR
+4. **Performance**: Fast refresh via Next.js dev server
