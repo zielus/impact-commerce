@@ -12,3 +12,5 @@ REQUIREMENTS.md
 *.config.js
 *.config.ts
 package-lock.json
+pnpm-lock.yaml
+.vscode

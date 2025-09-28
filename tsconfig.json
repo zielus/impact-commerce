@@ -35,6 +35,19 @@
       "@/tests/*": ["./tests/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", ".claude", ".codex", ".specify", "specs"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "vitest-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".claude",
+    ".codex",
+    ".specify",
+    ".vscode",
+    "specs"
+  ]
 }

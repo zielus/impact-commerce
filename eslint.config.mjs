@@ -22,6 +22,7 @@ const eslintConfig = [
       ".claude/**",
       ".codex/**",
       ".specify/**",
+      ".vscode/**",
       "specs/**",
     ],
   },

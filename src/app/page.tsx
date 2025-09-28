@@ -1,8 +1,8 @@
 export default function HomePage() {
   return (
-    <main>
-      <h1>Welcome</h1>
-      <p>Home page coming soon...</p>
-    </main>
+    <div>
+      <h1>Shopping Cart</h1>
+      <p>Cart page coming soon...</p>
+    </div>
   );
 }

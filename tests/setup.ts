@@ -2,23 +2,6 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { afterEach, vi } from "vitest";
 
-// Mock styled-components ServerStyleSheet for testing
-vi.mock("styled-components", async () => {
-  const actual = await vi.importActual("styled-components");
-  return {
-    ...actual,
-    ServerStyleSheet: vi.fn(() => ({
-      collectStyles: vi.fn((element) => element),
-      getStyleTags: vi.fn(() => ""),
-      getStyleElement: vi.fn(() => []),
-      seal: vi.fn(),
-      instance: {
-        clearTag: vi.fn(),
-      },
-    })),
-  };
-});
-
 // Mock Next.js Image component
 vi.mock("next/image", () => ({
   default: vi.fn(({ src, alt, ...props }) => {
