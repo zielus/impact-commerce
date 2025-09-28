@@ -1,5 +1,4 @@
 import "@/styles/global.css.ts";
-import { lightTheme } from "@/styles/theme.css";
 import type { Metadata } from "next";
 import AppProviders from "./providers";
 
@@ -15,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={lightTheme}>
+      <body className="{lightThemeClass}">
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

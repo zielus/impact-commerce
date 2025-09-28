@@ -1,10 +1,20 @@
 import {
-  createGlobalTheme,
-  createTheme,
-  createThemeContract,
-} from "@vanilla-extract/css";
+  amber,
+  amberDark,
+  blue,
+  blueA,
+  blueDark,
+  blueDarkA,
+  gray,
+  grayDark,
+  green,
+  greenDark,
+  red,
+  redDark,
+} from "@radix-ui/colors";
+import { createGlobalTheme, createTheme } from "@vanilla-extract/css";
 
-// Global spacing, radius, and shadow values
+/** Spacing / radius / shadow stay global (not theme-specific) */
 export const space = createGlobalTheme(":root", {
   xs: "4px",
   sm: "8px",
@@ -26,45 +36,47 @@ export const shadow = createGlobalTheme(":root", {
   e3: "0 6px 16px rgba(0,0,0,.12)",
 });
 
-// Color theme contract
-const colorVars = createThemeContract({
-  bg: null,
-  surface: null,
-  text: null,
-  primary: null,
-  border: null,
-  success: null,
-  warning: null,
-  error: null,
+/** THEME: expose full Radix scales as vars.colors.* */
+export const [lightThemeClass, vars] = createTheme({
+  colors: {
+    ...gray,
+    ...blue,
+    ...red,
+    ...green,
+    ...amber,
+    ...blueA, // alpha for subtle tints
+  },
 });
 
-// Theme palettes:
-export const lightTheme = createTheme(colorVars, {
-  bg: "#ffffff",
-  surface: "#f8f9fb",
-  text: "#111827",
-  primary: "#2563eb",
-  border: "#e5e7eb",
-  success: "#22c55e",
-  warning: "#f59e0b",
-  error: "#ef4444",
+export const darkThemeClass = createTheme(vars, {
+  colors: {
+    ...grayDark,
+    ...blueDark,
+    ...redDark,
+    ...greenDark,
+    ...amberDark,
+    ...blueDarkA,
+  },
 });
 
-export const darkTheme = createTheme(colorVars, {
-  bg: "#0b0f15",
-  surface: "#121825",
-  text: "#f3f4f6",
-  primary: "#3b82f6",
-  border: "#243042",
-  success: "#22c55e",
-  warning: "#fbbf24",
-  error: "#f87171",
-});
+/** Optional semantic aliases so components don’t hardcode scale indices everywhere */
+export const color = {
+  // Light & dark will resolve via the active theme class:
+  bg: vars.colors.gray1,
+  surface: vars.colors.gray2,
+  surfaceElevated: vars.colors.gray3,
+  text: vars.colors.gray12,
+  textMuted: vars.colors.gray9,
 
-// Export unified theme object for easier usage
-export const theme = {
-  color: colorVars,
-  space,
-  radius,
-  shadow,
+  primary: vars.colors.blue10,
+  primaryHover: vars.colors.blue11,
+  primarySubtle: vars.colors.blueA3, // translucent brand tint (works great for badges/hover)
+
+  border: vars.colors.gray6,
+
+  success: vars.colors.green10,
+  warning: vars.colors.amber10,
+  error: vars.colors.red10,
 };
+
+export const theme = { color, space, radius, shadow, vars };
