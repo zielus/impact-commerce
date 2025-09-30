@@ -1,39 +1,20 @@
-import { recipe } from "@vanilla-extract/recipes";
-import { theme } from "../styles/theme.css";
+import { responsiveGrid, stackedSection } from "@/styles/layout.css";
+import { surfaceCard } from "@/styles/surface.css";
+import { heading } from "@/styles/typography.css";
+import { style } from "@vanilla-extract/css";
 
-export const homeContainer = recipe({
-  base: {
-    display: "flex",
-    flexDirection: "column",
-    gap: theme.space.md,
-    padding: theme.space.lg,
-  },
-  variants: {
-    align: {
-      start: { alignItems: "flex-start" },
-      center: { alignItems: "center" },
-    },
-    tone: {
-      default: {
-        color: theme.color.text,
-      },
-      muted: {
-        color: theme.color.text, // Remove reference to muted for now
-      },
-    },
-  },
-  defaultVariants: {
-    align: "start",
-    tone: "default",
-  },
+export const homeContainer = stackedSection;
+
+export const pageTitle = heading({
+  level: "h1",
+  align: "center",
 });
 
-export const card = recipe({
-  base: {
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.color.surface,
-    boxShadow: theme.shadow.e2,
-    padding: theme.space.lg,
-    width: "min(560px, 100%)",
+export const categoriesGrid = style([
+  responsiveGrid({ columns: 4, gap: "lg" }),
+  {
+    marginTop: "var(--space-xl)",
   },
-});
+]);
+
+export const card = surfaceCard;
