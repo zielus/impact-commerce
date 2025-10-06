@@ -1,65 +1,34 @@
-import { surfaceCard } from "@/styles/surface.css";
-import { color, space } from "@/styles/theme.css";
+import { sprinkles } from "@/styles/sprinkles.css";
+import { space } from "@/styles/tokens";
+import { aspectRatio } from "@/styles/utils.css";
 import { style } from "@vanilla-extract/css";
 
-export const card = style([
-  surfaceCard({ padding: "none", interaction: "lift" }),
-  {
-    overflow: "hidden",
-    height: "100%",
+export const cardContainer = style([
+  sprinkles({
+    height: "full",
     display: "flex",
     flexDirection: "column",
-  },
+    overflow: "hidden",
+  }),
 ]);
 
-export const imageContainer = style({
-  position: "relative",
-  width: "100%",
-  aspectRatio: "1",
-  backgroundColor: color.bg,
-});
+export const imageContainer = aspectRatio.square;
 
-export const image = style({
-  width: "100%",
-  height: "100%",
+export const productImage = style({
   objectFit: "contain",
-  padding: space.md,
+  padding: space[4],
 });
 
-export const content = style({
-  padding: space.lg,
-  flex: 1,
-  display: "flex",
-  flexDirection: "column",
-  gap: space.sm,
-});
+export const contentContainer = style([
+  sprinkles({
+    p: 8,
+    flex: "1",
+  }),
+]);
 
-export const title = style({
-  fontSize: "1rem",
-  fontWeight: "600",
-  color: color.text,
-  lineHeight: 1.4,
-  display: "-webkit-box",
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: "vertical",
-  overflow: "hidden",
-});
-
-export const price = style({
-  fontSize: "1.25rem",
-  fontWeight: "bold",
-  color: color.primary,
-  marginTop: "auto",
-});
-
-export const rating = style({
-  display: "flex",
-  alignItems: "center",
-  gap: space.xs,
-  fontSize: "0.875rem",
-  color: color.textMuted,
-});
-
-export const addButton = style({
-  marginTop: space.sm,
-});
+export const ratingContainer = style([
+  sprinkles({
+    fontSize: "sm",
+    color: "textMuted",
+  }),
+]);

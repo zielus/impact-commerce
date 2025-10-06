@@ -1,42 +1,61 @@
+import { Grid } from "@/components/ui/Grid";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
 import { Product } from "@/types";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { ProductCard } from "../ProductCard";
 import { ProductCardSkeleton } from "../ProductCard/ProductCardSkeleton";
-import * as styles from "./ProductGrid.css";
 
 interface ProductGridProps {
-  products: Product[];
+  products: Product[] | undefined;
   isLoading?: boolean;
+  error?: Error | null;
   skeletonCount?: number;
 }
 
 export function ProductGrid({
   products,
   isLoading = false,
+  error = null,
   skeletonCount = 6,
 }: ProductGridProps) {
-  if (isLoading) {
+  const productList = products ?? [];
+
+  if (error) {
     return (
-      <div className={styles.grid}>
-        {Array.from({ length: skeletonCount }).map((_, i) => (
-          <ProductCardSkeleton key={i} />
-        ))}
-      </div>
+      <Stack align="center" gap={6} sx={{ py: 10 }}>
+        <ExclamationTriangleIcon width={32} height={32} />
+        <Text color="textMuted" align="center">
+          Unable to load products. Please try again later.
+        </Text>
+      </Stack>
     );
   }
 
-  if (products.length === 0) {
+  if (!isLoading && productList.length === 0) {
     return (
-      <div className={styles.grid}>
-        <p>No products found in this category.</p>
-      </div>
+      <Stack align="center" sx={{ py: 10 }}>
+        <Text color="textMuted">No products found in this category.</Text>
+      </Stack>
     );
   }
 
   return (
-    <div className={styles.grid}>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+    <Grid
+      columns={{
+        mobile: 1,
+        tablet: 2,
+        desktop: 3,
+      }}
+      gap={{ mobile: 6, tablet: 10 }}
+    >
+      {productList.map((product, index) => (
+        <ProductCard key={product.id} product={product} priority={index < 3} />
       ))}
-    </div>
+      {isLoading &&
+        Array.from({ length: skeletonCount }).map((_, i) => (
+          <ProductCardSkeleton key={`product-skeleton-${i}`} />
+        ))}
+    </Grid>
   );
 }
