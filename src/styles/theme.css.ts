@@ -12,71 +12,89 @@ import {
   red,
   redDark,
 } from "@radix-ui/colors";
-import { createGlobalTheme, createTheme } from "@vanilla-extract/css";
+import { createTheme, createThemeContract } from "@vanilla-extract/css";
 
-/** Spacing / radius / shadow stay global (not theme-specific) */
-export const space = createGlobalTheme(":root", {
-  xs: "4px",
-  sm: "8px",
-  md: "12px",
-  lg: "16px",
-  xl: "24px",
-});
-
-export const radius = createGlobalTheme(":root", {
-  sm: "4px",
-  md: "8px",
-  lg: "12px",
-  pill: "9999px",
-});
-
-export const shadow = createGlobalTheme(":root", {
-  e1: "0 1px 2px rgba(0,0,0,.06)",
-  e2: "0 2px 6px rgba(0,0,0,.08)",
-  e3: "0 6px 16px rgba(0,0,0,.12)",
-});
-
-/** THEME: expose full Radix scales as vars.colors.* */
-export const [lightThemeClass, vars] = createTheme({
-  colors: {
-    ...gray,
-    ...blue,
-    ...red,
-    ...green,
-    ...amber,
-    ...blueA, // alpha for subtle tints
+export const vars = createThemeContract({
+  color: {
+    background: null,
+    surface: null,
+    surfaceElevated: null,
+    surfaceHover: null,
+    text: null,
+    textMuted: null,
+    primary: null,
+    primaryHover: null,
+    primaryActive: null,
+    primarySubtle: null,
+    primarySubtleHover: null,
+    border: null,
+    borderHover: null,
+    success: null,
+    successSubtle: null,
+    warning: null,
+    warningSubtle: null,
+    error: null,
+    errorSubtle: null,
+  },
+  shadow: {
+    sm: null,
+    md: null,
+    lg: null,
   },
 });
-
+export const lightThemeClass = createTheme(vars, {
+  color: {
+    background: gray.gray1,
+    surface: gray.gray2,
+    surfaceElevated: gray.gray3,
+    surfaceHover: gray.gray4,
+    text: gray.gray12,
+    textMuted: gray.gray11,
+    primary: blue.blue10,
+    primaryHover: blue.blue11,
+    primaryActive: blue.blue12,
+    primarySubtle: blueA.blueA3,
+    primarySubtleHover: blueA.blueA4,
+    border: gray.gray6,
+    borderHover: gray.gray7,
+    success: green.green10,
+    successSubtle: green.green3,
+    warning: amber.amber10,
+    warningSubtle: amber.amber3,
+    error: red.red10,
+    errorSubtle: red.red3,
+  },
+  shadow: {
+    sm: "0 1px 2px rgba(0,0,0,.06)",
+    md: "0 2px 6px rgba(0,0,0,.08)",
+    lg: "0 6px 16px rgba(0,0,0,.12)",
+  },
+});
 export const darkThemeClass = createTheme(vars, {
-  colors: {
-    ...grayDark,
-    ...blueDark,
-    ...redDark,
-    ...greenDark,
-    ...amberDark,
-    ...blueDarkA,
+  color: {
+    background: grayDark.gray1,
+    surface: grayDark.gray2,
+    surfaceElevated: grayDark.gray3,
+    surfaceHover: grayDark.gray4,
+    text: grayDark.gray12,
+    textMuted: grayDark.gray11,
+    primary: blueDark.blue10,
+    primaryHover: blueDark.blue11,
+    primaryActive: blueDark.blue12,
+    primarySubtle: blueDarkA.blueA3,
+    primarySubtleHover: blueDarkA.blueA4,
+    border: grayDark.gray6,
+    borderHover: grayDark.gray7,
+    success: greenDark.green10,
+    successSubtle: greenDark.green3,
+    warning: amberDark.amber10,
+    warningSubtle: amberDark.amber3,
+    error: redDark.red10,
+    errorSubtle: redDark.red3,
+  },
+  shadow: {
+    sm: "0 1px 2px rgba(0,0,0,.35)",
+    md: "0 2px 6px rgba(0,0,0,.45)",
+    lg: "0 6px 18px rgba(0,0,0,.55)",
   },
 });
-
-/** Optional semantic aliases so components don’t hardcode scale indices everywhere */
-export const color = {
-  // Light & dark will resolve via the active theme class:
-  bg: vars.colors.gray1,
-  surface: vars.colors.gray2,
-  surfaceElevated: vars.colors.gray3,
-  text: vars.colors.gray12,
-  textMuted: vars.colors.gray9,
-
-  primary: vars.colors.blue10,
-  primaryHover: vars.colors.blue11,
-  primarySubtle: vars.colors.blueA3, // translucent brand tint (works great for badges/hover)
-
-  border: vars.colors.gray6,
-
-  success: vars.colors.green10,
-  warning: vars.colors.amber10,
-  error: vars.colors.red10,
-};
-
-export const theme = { color, space, radius, shadow, vars };
