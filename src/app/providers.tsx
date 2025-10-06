@@ -1,5 +1,7 @@
 "use client";
 
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { CartProvider } from "@/contexts/cart-context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode, useState } from "react";
 
@@ -11,7 +13,11 @@ export function AppProviders({ children }: AppProvidersProps) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <CartProvider>{children}</CartProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
