@@ -1,71 +1,66 @@
-import { type ResponsiveValue } from "@/styles/sprinkles.css";
+import { sprinkles, type Sprinkles } from "@/styles/sprinkles.css";
+import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { Box, type BoxProps } from "../Box";
 
-export interface StackProps
-  extends Omit<BoxProps, "display" | "flexDirection"> {
-  /** Direction of the stack */
-  direction?: ResponsiveValue<
-    "row" | "column" | "row-reverse" | "column-reverse"
-  >;
-  /** Spacing between items */
-  spacing?: ResponsiveValue<"none" | "xs" | "sm" | "md" | "lg" | "xl">;
-  /** Alignment of items along the cross axis */
-  align?: ResponsiveValue<
-    "stretch" | "flex-start" | "center" | "flex-end" | "baseline"
-  >;
-  /** Justification of items along the main axis */
-  justify?: ResponsiveValue<
-    | "flex-start"
-    | "center"
-    | "flex-end"
-    | "space-between"
-    | "space-around"
-    | "space-evenly"
-  >;
-  /** Whether to wrap items */
-  wrap?: ResponsiveValue<"nowrap" | "wrap" | "wrap-reverse">;
+type PolymorphicStackProps<C extends React.ElementType> = {
+  as?: C;
+  justify?: Sprinkles["justifyContent"];
+  align?: Sprinkles["alignItems"];
+  gap?: Sprinkles["gap"];
+  inline?: boolean;
+  sx?: Sprinkles;
+  className?: string;
+  children?: React.ReactNode;
+} & Omit<React.ComponentPropsWithoutRef<C>, "as" | "className">;
+
+interface StackComponent {
+  <C extends React.ElementType = "div">(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    props: PolymorphicStackProps<C> & { ref?: React.Ref<any> }
+  ): React.ReactElement | null;
+  displayName?: string;
 }
 
-export const Stack = forwardRef<HTMLElement, StackProps>(
-  (
-    {
-      direction = "column",
-      spacing = "md",
-      align = "stretch",
-      justify = "flex-start",
-      wrap = "nowrap",
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <Box
-        ref={ref}
-        display="flex"
-        flexDirection={direction}
-        gap={spacing}
-        alignItems={align}
-        justifyContent={justify}
-        flexWrap={wrap}
-        {...props}
-      />
-    );
-  }
-);
+export const Stack = forwardRef(function StackInner<
+  C extends React.ElementType = "div",
+>(
+  {
+    as,
+    justify,
+    align,
+    gap,
+    inline,
+    sx,
+    className,
+    children,
+    ...props
+  }: PolymorphicStackProps<C>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref: React.Ref<any>
+) {
+  const Component = as || "div";
+
+  return (
+    <Component
+      ref={ref}
+      className={clsx(
+        sprinkles({
+          display: inline ? "inline-flex" : "flex",
+          flexDirection: "column",
+          justifyContent: justify,
+          alignItems: align,
+          gap,
+          ...sx,
+        }),
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+}) as unknown as StackComponent;
 
 Stack.displayName = "Stack";
 
-/** Horizontal stack (row direction) */
-export const HStack = forwardRef<HTMLElement, Omit<StackProps, "direction">>(
-  (props, ref) => <Stack ref={ref} direction="row" {...props} />
-);
-
-HStack.displayName = "HStack";
-
-/** Vertical stack (column direction) */
-export const VStack = forwardRef<HTMLElement, Omit<StackProps, "direction">>(
-  (props, ref) => <Stack ref={ref} direction="column" {...props} />
-);
-
-VStack.displayName = "VStack";
+export type { PolymorphicStackProps as StackProps };

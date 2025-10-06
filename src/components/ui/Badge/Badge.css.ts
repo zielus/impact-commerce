@@ -1,81 +1,92 @@
-import { color, radius, space } from "@/styles/theme.css";
+import { sprinkles } from "@/styles/sprinkles.css";
+import { space } from "@/styles/tokens";
+import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const badgeRecipe = recipe({
-  base: {
+const badgeBase = style([
+  sprinkles({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: radius.pill,
-    fontSize: "11px",
-    fontWeight: "600",
+    borderRadius: "pill",
+    fontSize: "xs",
+    fontWeight: "semibold",
+  }),
+  {
     lineHeight: "1",
     textTransform: "uppercase",
     letterSpacing: "0.025em",
-    paddingLeft: space.sm,
-    paddingRight: space.sm,
-    paddingTop: space.xs,
-    paddingBottom: space.xs,
-    minHeight: "20px",
     whiteSpace: "nowrap",
   },
+]);
+
+const sizeStyles = {
+  sm: style([
+    sprinkles({
+      fontSize: "xs",
+      px: 2,
+    }),
+    { minHeight: space[4] },
+  ]),
+  md: style([
+    sprinkles({
+      fontSize: "xs",
+      px: 4,
+      py: 2,
+    }),
+    { minHeight: space[5] },
+  ]),
+  lg: style([
+    sprinkles({
+      fontSize: "sm",
+      px: 6,
+    }),
+    { minHeight: space[6] },
+  ]),
+};
+
+export const badgeRecipe = recipe({
+  base: badgeBase,
 
   variants: {
     variant: {
-      default: {
-        backgroundColor: color.surface,
-        color: color.text,
-        border: `1px solid ${color.border}`,
-      },
+      default: style([
+        sprinkles({
+          background: "surface",
+          color: "text",
+          borderColor: "border",
+          borderWidth: 1,
+          borderStyle: "solid",
+        }),
+      ]),
 
-      secondary: {
-        backgroundColor: color.surfaceElevated,
-        color: color.textMuted,
-      },
+      secondary: sprinkles({
+        background: "surfaceElevated",
+        color: "textMuted",
+      }),
 
-      success: {
-        backgroundColor: color.success,
+      success: sprinkles({
+        background: "success",
         color: "white",
-      },
+      }),
 
-      warning: {
-        backgroundColor: color.warning,
+      warning: sprinkles({
+        background: "warning",
         color: "white",
-      },
+      }),
 
-      error: {
-        backgroundColor: color.error,
+      error: sprinkles({
+        background: "error",
         color: "white",
-      },
+      }),
 
-      primary: {
-        backgroundColor: color.primary,
+      primary: sprinkles({
+        background: "primary",
         color: "white",
-      },
+      }),
     },
 
-    size: {
-      sm: {
-        fontSize: "10px",
-        paddingLeft: space.xs,
-        paddingRight: space.xs,
-        minHeight: "16px",
-      },
-
-      md: {
-        fontSize: "11px",
-        paddingLeft: space.sm,
-        paddingRight: space.sm,
-        minHeight: "20px",
-      },
-
-      lg: {
-        fontSize: "12px",
-        paddingLeft: space.md,
-        paddingRight: space.md,
-        minHeight: "24px",
-      },
-    },
+    size: sizeStyles,
   },
 
   defaultVariants: {

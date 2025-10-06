@@ -1,8 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Flex } from "@/components/ui/Flex";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
 import { Component, type ErrorInfo, type ReactNode } from "react";
-import * as styles from "./ErrorBoundary.css";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -71,35 +74,67 @@ export class ErrorBoundary extends Component<
 
       // Default error UI
       return (
-        <div className={styles.container} data-testid="error-boundary">
-          <h1 className={styles.title}>Oops! Something went wrong</h1>
-          <p className={styles.message}>
+        <Stack
+          align="center"
+          justify="center"
+          gap={6}
+          sx={{
+            p: 8,
+            textAlign: "center",
+          }}
+          style={{ minHeight: "400px" }}
+          data-testid="error-boundary"
+        >
+          <Text variant="h2" color="error">
+            Oops! Something went wrong
+          </Text>
+
+          <Text variant="body" color="textMuted" sx={{ maxWidth: "prose" }}>
             We encountered an unexpected error. Please try refreshing the page
             or contact support if the problem persists.
-          </p>
+          </Text>
 
-          <div className={styles.actions}>
+          <Flex gap={4} sx={{ marginTop: 8 }}>
             <Button onClick={this.handleReset} variant="secondary">
               Try Again
             </Button>
             <Button onClick={this.handleReload}>Reload Page</Button>
-          </div>
+          </Flex>
 
           {process.env.NODE_ENV === "development" &&
             this.state.error &&
             this.state.errorInfo && (
-              <div className={styles.details}>
-                <h2>Error Details (Development Only)</h2>
-                <div className={styles.stackTrace}>
-                  <strong>Error:</strong> {this.state.error.toString()}
-                  {"\n\n"}
-                  <strong>Stack Trace:</strong>
-                  {"\n"}
-                  {this.state.errorInfo.componentStack}
-                </div>
-              </div>
+              <Card
+                padding="md"
+                sx={{
+                  marginTop: 8,
+                  maxWidth: "7xl",
+                  width: "full",
+                  textAlign: "left",
+                  overflowX: "auto",
+                }}
+              >
+                <Stack gap={4}>
+                  <Text variant="h4">Error Details (Development Only)</Text>
+                  <Text
+                    variant="bodySm"
+                    color="textMuted"
+                    style={{
+                      fontFamily: "monospace",
+                      whiteSpace: "pre-wrap",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    <strong>Error:</strong> {this.state.error.toString()}
+                    {"\n\n"}
+                    <strong>Stack Trace:</strong>
+                    {"\n"}
+                    {this.state.errorInfo.componentStack}
+                  </Text>
+                </Stack>
+              </Card>
             )}
-        </div>
+        </Stack>
       );
     }
 

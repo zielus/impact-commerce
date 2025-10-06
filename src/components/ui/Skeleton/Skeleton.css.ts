@@ -1,36 +1,57 @@
-import { color } from "@/styles/theme.css";
-import { keyframes } from "@vanilla-extract/css";
+import { sprinkles } from "@/styles/sprinkles.css";
+import { vars } from "@/styles/theme.css";
+import { keyframes, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const pulse = keyframes({
-  "0%, 100%": {
-    opacity: 1,
+/**
+ * Skeleton recipe following design system hierarchy:
+ * 1. sprinkles - for shared shape tokens
+ * 2. style() - for animation, layout overrides
+ */
+
+const shimmer = keyframes({
+  "0%": {
+    backgroundPosition: "-200% 0",
   },
-  "50%": {
-    opacity: 0.5,
+  "100%": {
+    backgroundPosition: "200% 0",
   },
 });
 
-export const skeleton = recipe({
-  base: {
-    backgroundColor: color.surface,
-    borderRadius: "8px",
-    animation: `${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
+const skeletonBase = style([
+  sprinkles({
+    borderRadius: "md",
+  }),
+  {
+    backgroundColor: vars.color.surface,
+    backgroundImage: `linear-gradient(90deg, ${vars.color.surface} 0%, ${vars.color.surfaceHover} 50%, ${vars.color.surface} 100%)`,
+    backgroundSize: "200% 100%",
+    backgroundRepeat: "no-repeat",
+    willChange: "background-position",
+    animation: `${shimmer} 1.4s ease-in-out infinite`,
   },
+]);
+
+export const skeleton = recipe({
+  base: skeletonBase,
+
   variants: {
     variant: {
-      text: {
+      text: style({
         height: "1em",
         marginBottom: "0.5em",
-      },
-      rectangular: {
-        width: "100%",
-      },
-      circular: {
-        borderRadius: "50%",
-      },
+      }),
+
+      rectangular: sprinkles({
+        width: "full",
+      }),
+
+      circular: sprinkles({
+        borderRadius: "circle",
+      }),
     },
   },
+
   defaultVariants: {
     variant: "rectangular",
   },
